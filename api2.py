@@ -2,16 +2,21 @@ import requests
 import urllib
 
 
-def get_api(url):
-    result = requests.get(url)
+def get_api(url, param):
+    result = requests.get(url, params=param)
     return result.json()
 
 
 def main():
     keyword = input("キーワードを入力してください>>")
-    url = "https://app.rakuten.co.jp/services/api/Product/Search/20170426?format=json&keyword={}&applicationId=1019079537947262807".format(
-        keyword)
-    result = get_api(url)
+    APP_ID = 1019079537947262807
+    url = "https://app.rakuten.co.jp/services/api/Product/Search/20170426"
+    param = {
+        "format":"json",
+        "keyword":keyword,
+        "applicationId":[APP_ID]
+    }
+    result = get_api(url, param)
     for i in result['Products']:
         item = i['Product']
         name = item['productName']
